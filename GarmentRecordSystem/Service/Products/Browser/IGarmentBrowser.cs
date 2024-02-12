@@ -1,4 +1,6 @@
-﻿using GarmentRecordSystem.Model;
+﻿using System.Collections;
+using GarmentRecordSystem.Enums;
+using GarmentRecordSystem.Model;
 
 namespace GarmentRecordSystem.Service.Products.Browser;
 
@@ -11,8 +13,9 @@ public interface IGarmentBrowser
     void SortByPurchaseDate();
     void SortBySize();
     void SortByColor();
+    void PrintAllGarment();
     
-    bool AddGarment(Garment item);
+    bool AddGarment(List<Tuple<string, string, Sizes>> item);
     bool UpdateGarment(int index, Garment newGarment);
     bool DeleteGarment(int index);
 }
