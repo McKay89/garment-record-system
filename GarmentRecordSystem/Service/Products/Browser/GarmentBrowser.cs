@@ -1,4 +1,5 @@
-﻿using GarmentRecordSystem.Enums;
+﻿using System.Collections;
+using GarmentRecordSystem.Enums;
 using GarmentRecordSystem.Model;
 using GarmentRecordSystem.Service.Logger;
 
@@ -6,11 +7,11 @@ namespace GarmentRecordSystem.Service.Products.Browser;
 
 public class GarmentBrowser : IGarmentBrowser
 {
-    private IList<Garment> _garments;
+    private List<Garment> _garments;
     private readonly ILogger _logger;
     public int ChangesCounter { get; private set; } = 0;
     
-    public GarmentBrowser(IList<GarmentJson>? garments, ILogger logger)
+    public GarmentBrowser(List<GarmentJson>? garments, ILogger logger)
     {
         _garments = garments != null ? CreateGarmentList(garments) : new List<Garment>();
         _logger = logger;
@@ -50,11 +51,19 @@ public class GarmentBrowser : IGarmentBrowser
         _garments = sortedGarments;
     }
 
-    public bool AddGarment(Garment item)
+    public bool AddGarment(List<Tuple<string, string, Sizes>> item)
     {
         try
         {
-            _garments?.Add(item);
+            int maxGarmentId = _garments.Max(g => g.GarmentId);
+            _garments?.Add(new Garment()
+            {
+                GarmentId = maxGarmentId + 1,
+                BrandName = item[0].Item1,
+                PurchaseDate = DateOnly.FromDateTime(DateTime.Now),
+                Color = item[0].Item2,
+                Size = item[0].Item3
+            });
             ChangesCounter++;
             return true;
         }
@@ -100,15 +109,28 @@ public class GarmentBrowser : IGarmentBrowser
         }
     }
 
-    private static IList<Garment> CreateGarmentList(IList<GarmentJson> garments)
+    public void PrintAllGarment()
     {
-        return (IList<Garment>)garments.Select(garment => new Garment
+        foreach (var garment in _garments)
         {
-            GarmentId = garment.GarmentId,
-            BrandName = garment.BrandName,
-            PurchaseDate = DateOnly.Parse(garment.PurchaseDate),
-            Color = garment.Color,
-            Size = (Sizes)Enum.Parse(typeof(Sizes), garment.Size)
-        });
+            Console.WriteLine($"Garment ID: {garment.GarmentId}");
+            Console.WriteLine($"Brand Name: {garment.BrandName}");
+            Console.WriteLine($"Purchased Date: {garment.PurchaseDate}");
+            Console.WriteLine($"Color: {garment.Color}");
+            Console.WriteLine($"Size: {garment.Size}");
+        }
+    }
+
+    private static List<Garment> CreateGarmentList(List<GarmentJson> garments)
+    {
+        return garments.Select(garment => new Garment()
+            {
+                GarmentId = garment.GarmentId,
+                BrandName = garment.BrandName,
+                PurchaseDate = DateOnly.Parse(garment.PurchaseDate),
+                Color = garment.Color,
+                Size = (Sizes)Enum.Parse(typeof(Sizes), garment.Size)
+            })
+            .ToList();
     }
 }
