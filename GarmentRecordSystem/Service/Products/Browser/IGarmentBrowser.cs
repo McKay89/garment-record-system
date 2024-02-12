@@ -4,14 +4,15 @@ namespace GarmentRecordSystem.Service.Products.Browser;
 
 public interface IGarmentBrowser
 {
-    IEnumerable<Garment> GetAll();
+    IEnumerable<Garment>? GetAll();
+    Garment? SearchGarment(int id);
     
-    IEnumerable<Garment> SortByBrandName();
-    IEnumerable<Garment> SortByPurchaseDate();
-    IEnumerable<Garment> SortBySize();
-    IEnumerable<Garment> SortByColor();
+    void SortByBrandName();
+    void SortByPurchaseDate();
+    void SortBySize();
+    void SortByColor();
     
-    bool SetNewItem(object item);
-    bool UpdateItem(uint id);
-    bool DeleteItem(uint id);
+    bool AddGarment(Garment item);
+    bool UpdateGarment(int index, Garment newGarment);
+    bool DeleteGarment(int index);
 }

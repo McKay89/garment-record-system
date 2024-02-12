@@ -1,52 +1,114 @@
-﻿using GarmentRecordSystem.Model;
+﻿using GarmentRecordSystem.Enums;
+using GarmentRecordSystem.Model;
+using GarmentRecordSystem.Service.Logger;
 
 namespace GarmentRecordSystem.Service.Products.Browser;
 
 public class GarmentBrowser : IGarmentBrowser
 {
-    private IEnumerable<GarmentJson>? _garments;
-    public GarmentBrowser(IReadOnlyCollection<GarmentJson>? garments)
+    private IList<Garment> _garments;
+    private readonly ILogger _logger;
+    public int ChangesCounter { get; private set; } = 0;
+    
+    public GarmentBrowser(IList<GarmentJson>? garments, ILogger logger)
     {
-        if (garments != null) _garments = garments;
+        _garments = garments != null ? CreateGarmentList(garments) : new List<Garment>();
+        _logger = logger;
     }
     
     public IEnumerable<Garment> GetAll()
     {
-        throw new NotImplementedException();
+        return _garments;
     }
 
-    public IEnumerable<Garment> SortByBrandName()
+    public Garment? SearchGarment(int id)
     {
-        throw new NotImplementedException();
+        return _garments.FirstOrDefault(garment => garment.GarmentId == id);
     }
 
-    public IEnumerable<Garment> SortByPurchaseDate()
+    public void SortByBrandName()
     {
-        throw new NotImplementedException();
+        var sortedGarments = _garments.OrderBy(g => g.BrandName).ToList();
+        _garments = sortedGarments;
     }
 
-    public IEnumerable<Garment> SortBySize()
+    public void SortByPurchaseDate()
     {
-        throw new NotImplementedException();
+        var sortedGarments = _garments.OrderBy(g => g.PurchaseDate).ToList();
+        _garments = sortedGarments;
     }
 
-    public IEnumerable<Garment> SortByColor()
+    public void SortBySize()
     {
-        throw new NotImplementedException();
+        var sortedGarments = _garments.OrderBy(g => g.Size).ToList();
+        _garments = sortedGarments;
     }
 
-    public bool SetNewItem(object item)
+    public void SortByColor()
     {
-        throw new NotImplementedException();
+        var sortedGarments = _garments.OrderBy(g => g.Color).ToList();
+        _garments = sortedGarments;
     }
 
-    public bool UpdateItem(uint id)
+    public bool AddGarment(Garment item)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _garments?.Add(item);
+            ChangesCounter++;
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger.LogMessage($"{e}", "ERROR");
+            return false;
+        }
     }
 
-    public bool DeleteItem(uint id)
+    public bool UpdateGarment(int index, Garment newGarment)
     {
-        throw new NotImplementedException();
+        try
+        {
+            if (index >= 0 && index < _garments.Count)
+            {
+                _garments[index] = newGarment;
+                ChangesCounter++;
+                return true;
+            }
+
+            return false;
+        }
+        catch (Exception e)
+        {
+            _logger.LogMessage($"{e}", "ERROR");
+            return false;
+        }
+    }
+
+    public bool DeleteGarment(int index)
+    {
+        try
+        {
+            _garments.RemoveAt(index);
+            ChangesCounter++;
+            return true;
+        }
+        catch (Exception e)
+        {
+            _logger.LogMessage($"{e}", "ERROR");
+            return false;
+        }
+    }
+
+    private static IList<Garment> CreateGarmentList(IList<GarmentJson> garments)
+    {
+        return (IList<Garment>)garments.Select(garment => new Garment
+        {
+            GarmentId = garment.GarmentId,
+            BrandName = garment.BrandName,
+            PurchaseDate = DateOnly.Parse(garment.PurchaseDate),
+            Color = garment.Color,
+            Size = (Sizes)Enum.Parse(typeof(Sizes), garment.Size)
+        });
     }
 }
