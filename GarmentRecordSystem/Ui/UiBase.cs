@@ -1,4 +1,5 @@
 ﻿using GarmentRecordSystem.Service.Logger;
+using GarmentRecordSystem.Ui.Selector;
 
 namespace GarmentRecordSystem.Ui;
 
@@ -20,7 +21,7 @@ public abstract class UiBase
 
     public void PrintSubmenuInfos()
     {
-        Console.WriteLine(" Type 'back' if you want to return to Main Menu\n");
+        Console.WriteLine(" Type '--back' if you want to return to Main Menu\n");
     }
     
     public abstract void Run();
