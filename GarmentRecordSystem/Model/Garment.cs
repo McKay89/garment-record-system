@@ -2,4 +2,11 @@
 
 namespace GarmentRecordSystem.Model;
 
-public record Garment(uint GarmentId, string BrandName, DateOnly PurchaseDate, string Color, Sizes Size);
+public class Garment
+{
+    public uint GarmentId { get; set; }
+    public string BrandName { get; set; }
+    public DateOnly PurchaseDate { get; set; }
+    public string Color { get; set; }
+    public Sizes Size { get; set; }
+}
