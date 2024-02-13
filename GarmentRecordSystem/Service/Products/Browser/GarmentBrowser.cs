@@ -146,6 +146,11 @@ public class GarmentBrowser : IGarmentBrowser
         }
     }
 
+    public void PrintGarment(Garment garment)
+    {
+        _logger.LogGarment(garment);
+    }
+
     private static List<Garment> CreateGarmentList(List<GarmentJson> garments)
     {
         return garments.Select(garment => new Garment()
