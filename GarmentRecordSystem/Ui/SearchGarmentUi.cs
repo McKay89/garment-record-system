@@ -52,7 +52,7 @@ public class SearchGarmentUi : UiBase
     private int? CollectData()
     {
         // Request garment ID
-        var getId = InputValidator.Integer();
+        var getId = InputValidator.Integer(0, "Please choose an ID: ");
         
         if (getId == null) ReturnToMainMenu();
 

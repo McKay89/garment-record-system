@@ -59,13 +59,13 @@ public static class InputValidator
         return selectedDate;
     }
     
-    public static int? Integer()
+    public static int? Integer(int max, string label)
     {
         int input = 0;
         
         while (true)
         {
-            Console.Write("\n Please choose an ID: ");
+            Console.Write($"\n {label}");
             var i = Console.ReadLine();
             if (i == "--back") return null;
             
@@ -75,7 +75,18 @@ public static class InputValidator
             } 
             else if (input < 1)
             {
-                Logger.LogMessage("Input must be an positive integer!", "WARNING");
+                Logger.LogMessage("Input must be a positive integer!", "WARNING");
+            }
+            else if (input >= 1 && max > 0)
+            {
+                if (input <= max)
+                {
+                    break;
+                }
+                else
+                {
+                    Logger.LogMessage($"Input must be between 1 - {max}!", "WARNING");
+                }
             }
             else
             {
