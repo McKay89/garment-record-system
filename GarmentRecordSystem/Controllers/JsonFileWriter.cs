@@ -15,7 +15,7 @@ public static class JsonFileWriter
                 WriteIndented = true,
                 Converters = { new JsonStringEnumConverter() }
             });
-            File.WriteAllText("./garments.json", json);
+            File.WriteAllText("../../../garments.json", json);
 
             return true;
         }

@@ -9,7 +9,7 @@ using GarmentRecordSystem.Service.Products.Browser;
 ILogger logger = new ConsoleLogger();
 
 // Read JSON file (every garment is an object)
-var garmentsJson = JsonFileReader.Read(@"./garments.json");
+var garmentsJson = JsonFileReader.Read(@"../../../garments.json");
 
 // Create Garment Browser instance
 IGarmentBrowser garmentBrowser = garmentsJson is { Count: 0 } or null
