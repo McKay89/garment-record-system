@@ -10,7 +10,10 @@ public static class JsonFileReader
         try
         {
             var text = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<GarmentJson>>(text);
+            
+            return string.IsNullOrWhiteSpace(text)
+                ? new List<GarmentJson>()
+                : JsonSerializer.Deserialize<List<GarmentJson>>(text);
         }
         catch (FileNotFoundException)
         {
