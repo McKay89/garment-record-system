@@ -2,6 +2,7 @@
 using GarmentRecordSystem.Enums;
 using GarmentRecordSystem.Model;
 using GarmentRecordSystem.Service.Logger;
+using GarmentRecordSystem.Utils;
 
 namespace GarmentRecordSystem.Service.Products.Browser;
 
@@ -9,7 +10,6 @@ public class GarmentBrowser : IGarmentBrowser
 {
     private List<Garment> _garments;
     private readonly ILogger _logger;
-    public int ChangesCounter { get; private set; } = 0;
     
     public GarmentBrowser(List<GarmentJson>? garments, ILogger logger)
     {
@@ -31,24 +31,32 @@ public class GarmentBrowser : IGarmentBrowser
     {
         var sortedGarments = _garments.OrderBy(g => g.BrandName).ToList();
         _garments = sortedGarments;
+        
+        Changes.IncrementSortCounter();
     }
 
     public void SortByPurchaseDate()
     {
         var sortedGarments = _garments.OrderBy(g => g.PurchaseDate).ToList();
         _garments = sortedGarments;
+        
+        Changes.IncrementSortCounter();
     }
 
     public void SortBySize()
     {
         var sortedGarments = _garments.OrderBy(g => g.Size).ToList();
         _garments = sortedGarments;
+        
+        Changes.IncrementSortCounter();
     }
 
     public void SortByColor()
     {
         var sortedGarments = _garments.OrderBy(g => g.Color).ToList();
         _garments = sortedGarments;
+        
+        Changes.IncrementSortCounter();
     }
 
     public bool AddGarment(List<Tuple<string?, string?, Sizes?>> item)
@@ -64,7 +72,7 @@ public class GarmentBrowser : IGarmentBrowser
                 Color = item[0].Item2 ?? "Unknown",
                 Size = item[0].Item3 ?? (Sizes)Enum.Parse(typeof(Sizes), "S")
             });
-            ChangesCounter++;
+            Changes.IncrementAddCounter();
             return true;
         }
         catch (Exception e)
@@ -86,7 +94,7 @@ public class GarmentBrowser : IGarmentBrowser
             {
                 int index = _garments.IndexOf(existingGarment);
                 _garments[index] = newGarment;
-                ChangesCounter++;
+                Changes.IncrementUpdateCounter();
                 return true;
             }
 
@@ -101,13 +109,26 @@ public class GarmentBrowser : IGarmentBrowser
         }
     }
 
-    public bool DeleteGarment(int index)
+    public bool DeleteGarment(int? garmentId)
     {
+        if (garmentId == null) return false;
+        
         try
         {
-            _garments.RemoveAt(index);
-            ChangesCounter++;
-            return true;
+            var existingGarment = _garments.FirstOrDefault(g => g.GarmentId == garmentId);
+
+            if (existingGarment != null)
+            {
+                int index = _garments.IndexOf(existingGarment);
+                _garments.RemoveAt(index);
+                
+                Changes.IncrementDeleteCounter();
+                return true;
+            }
+
+            _logger.LogMessage($"Garment with ID {garmentId} not found.", "ERROR");
+            return false;
+
         }
         catch (Exception e)
         {

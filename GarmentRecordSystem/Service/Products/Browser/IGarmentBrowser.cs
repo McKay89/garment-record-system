@@ -17,5 +17,5 @@ public interface IGarmentBrowser
     
     bool AddGarment(List<Tuple<string?, string?, Sizes?>> item);
     bool UpdateGarment(Garment? newGarment);
-    bool DeleteGarment(int index);
+    bool DeleteGarment(int? garmentId);
 }
