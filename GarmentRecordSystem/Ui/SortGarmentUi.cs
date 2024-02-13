@@ -31,28 +31,37 @@ public class SortGarmentUi : UiBase
         
         // Get Input data
         var garmentId = CollectData();
+        bool resultSort = false;
         
         // Sorting
         switch (garmentId)
         {
             case 1:
-                _garmentBrowser.SortByBrandName();
+                resultSort = _garmentBrowser.SortByBrandName();
                 break;
             case 2:
-                _garmentBrowser.SortByPurchaseDate();
+                resultSort = _garmentBrowser.SortByPurchaseDate();
                 break;
             case 3:
-                _garmentBrowser.SortByColor();
+                resultSort = _garmentBrowser.SortByColor();
                 break;
             case 4:
-                _garmentBrowser.SortBySize();
+                resultSort = _garmentBrowser.SortBySize();
                 break;
             default:
                 _logger.LogMessage("Invalid input !", "ERROR");
                 break;
         }
+
+        if (resultSort)
+        {
+            _logger.LogMessage("Sorting process finished successfully !", "SUCCESS");
+        }
+        else
+        {
+            _logger.LogMessage("The list cannot be sorted because it contains too few items", "INFO");
+        }
         
-        _logger.LogMessage("Sorting process finished successfully !", "SUCCESS");
         Thread.Sleep(2000);
         ReturnToMainMenu();
     }
