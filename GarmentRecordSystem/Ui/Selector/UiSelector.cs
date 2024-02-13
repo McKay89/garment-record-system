@@ -17,10 +17,11 @@ public class UiSelector
     public UiBase Select()
     {
         _logger.LogMessage("Welcome in Garment Record System", "INFO");
+        Console.WriteLine(" 'garments.json' file loaded successfully");
         DisplayMenu();
         
         int getChoice = GetIntInput();
-        return _factories.Values[getChoice - 1].Create();
+        return _factories.Values[getChoice - 1].Create(_factories);
     }
 
     private void DisplayMenu()
