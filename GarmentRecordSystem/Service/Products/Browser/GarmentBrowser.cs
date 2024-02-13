@@ -27,36 +27,60 @@ public class GarmentBrowser : IGarmentBrowser
         return _garments.FirstOrDefault(garment => garment.GarmentId == id);
     }
 
-    public void SortByBrandName()
+    public bool SortByBrandName()
     {
-        var sortedGarments = _garments.OrderBy(g => g.BrandName).ToList();
-        _garments = sortedGarments;
+        if (_garments.Count > 1)
+        {
+            var sortedGarments = _garments.OrderBy(g => g.BrandName).ToList();
+            _garments = sortedGarments;
         
-        Changes.IncrementSortCounter();
+            Changes.IncrementSortCounter();
+
+            return true;
+        }
+        
+        return false;
     }
 
-    public void SortByPurchaseDate()
+    public bool SortByPurchaseDate()
     {
-        var sortedGarments = _garments.OrderBy(g => g.PurchaseDate).ToList();
-        _garments = sortedGarments;
+        if (_garments.Count > 1)
+        {
+            var sortedGarments = _garments.OrderBy(g => g.PurchaseDate).ToList();
+            _garments = sortedGarments;
+
+            Changes.IncrementSortCounter();
+
+            return true;
+        }
         
-        Changes.IncrementSortCounter();
+        return false;
     }
 
-    public void SortBySize()
+    public bool SortBySize()
     {
-        var sortedGarments = _garments.OrderBy(g => g.Size).ToList();
-        _garments = sortedGarments;
+        if (_garments.Count > 1)
+        {
+            var sortedGarments = _garments.OrderBy(g => g.Size).ToList();
+            _garments = sortedGarments;
+
+            Changes.IncrementSortCounter();
+        }
         
-        Changes.IncrementSortCounter();
+        return false;
     }
 
-    public void SortByColor()
+    public bool SortByColor()
     {
-        var sortedGarments = _garments.OrderBy(g => g.Color).ToList();
-        _garments = sortedGarments;
+        if (_garments.Count > 1)
+        {
+            var sortedGarments = _garments.OrderBy(g => g.Color).ToList();
+            _garments = sortedGarments;
+
+            Changes.IncrementSortCounter();
+        }
         
-        Changes.IncrementSortCounter();
+        return false;
     }
 
     public bool AddGarment(List<Tuple<string?, string?, Sizes?>> item)
