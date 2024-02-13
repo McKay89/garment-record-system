@@ -13,8 +13,8 @@ public class AddGarmentUiFactory : UiFactoryBase
 
     public override string UiName => "Add";
     
-    public override UiBase Create()
+    public override UiBase Create(SortedList<int, UiFactoryBase> factories)
     {
-        return new AddGarmentUi(UiName, _garmentBrowser);
+        return new AddGarmentUi(UiName, _garmentBrowser, factories);
     }
 }
