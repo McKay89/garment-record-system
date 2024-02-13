@@ -9,10 +9,10 @@ public interface IGarmentBrowser
     IEnumerable<Garment>? GetAll();
     Garment? SearchGarment(int? id);
     
-    void SortByBrandName();
-    void SortByPurchaseDate();
-    void SortBySize();
-    void SortByColor();
+    bool SortByBrandName();
+    bool SortByPurchaseDate();
+    bool SortBySize();
+    bool SortByColor();
     void PrintAllGarment();
     void PrintGarment(Garment garment);
     
