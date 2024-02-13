@@ -14,6 +14,7 @@ public interface IGarmentBrowser
     void SortBySize();
     void SortByColor();
     void PrintAllGarment();
+    void PrintGarment(Garment garment);
     
     bool AddGarment(List<Tuple<string?, string?, Sizes?>> item);
     bool UpdateGarment(Garment? newGarment);
