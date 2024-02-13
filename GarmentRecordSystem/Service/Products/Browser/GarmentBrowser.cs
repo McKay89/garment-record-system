@@ -22,7 +22,7 @@ public class GarmentBrowser : IGarmentBrowser
         return _garments;
     }
 
-    public Garment? SearchGarment(int id)
+    public Garment? SearchGarment(int? id)
     {
         return _garments.FirstOrDefault(garment => garment.GarmentId == id);
     }
@@ -51,18 +51,18 @@ public class GarmentBrowser : IGarmentBrowser
         _garments = sortedGarments;
     }
 
-    public bool AddGarment(List<Tuple<string, string, Sizes>> item)
+    public bool AddGarment(List<Tuple<string?, string?, Sizes?>> item)
     {
         try
         {
-            int maxGarmentId = _garments.Max(g => g.GarmentId);
+            int maxGarmentId = _garments.Count == 0 ? 0 : _garments.Max(g => g.GarmentId);
             _garments?.Add(new Garment()
             {
                 GarmentId = maxGarmentId + 1,
-                BrandName = item[0].Item1,
+                BrandName = item[0].Item1 ?? "Unknown",
                 PurchaseDate = DateOnly.FromDateTime(DateTime.Now),
-                Color = item[0].Item2,
-                Size = item[0].Item3
+                Color = item[0].Item2 ?? "Unknown",
+                Size = item[0].Item3 ?? (Sizes)Enum.Parse(typeof(Sizes), "S")
             });
             ChangesCounter++;
             return true;
@@ -74,18 +74,25 @@ public class GarmentBrowser : IGarmentBrowser
         }
     }
 
-    public bool UpdateGarment(int index, Garment newGarment)
+    public bool UpdateGarment(Garment? newGarment)
     {
+        if (newGarment is { GarmentId: 0 }) return false;
+        
         try
         {
-            if (index >= 0 && index < _garments.Count)
+            var existingGarment = _garments.FirstOrDefault(g => g.GarmentId == newGarment.GarmentId);
+            
+            if (existingGarment != null)
             {
+                int index = _garments.IndexOf(existingGarment);
                 _garments[index] = newGarment;
                 ChangesCounter++;
                 return true;
             }
 
+            _logger.LogMessage($"Garment with ID {newGarment.GarmentId} not found.", "ERROR");
             return false;
+
         }
         catch (Exception e)
         {
@@ -111,13 +118,10 @@ public class GarmentBrowser : IGarmentBrowser
 
     public void PrintAllGarment()
     {
+        Console.WriteLine($" Available garments ({_garments.Count})");
         foreach (var garment in _garments)
         {
-            Console.WriteLine($"Garment ID: {garment.GarmentId}");
-            Console.WriteLine($"Brand Name: {garment.BrandName}");
-            Console.WriteLine($"Purchased Date: {garment.PurchaseDate}");
-            Console.WriteLine($"Color: {garment.Color}");
-            Console.WriteLine($"Size: {garment.Size}");
+            _logger.LogGarment(garment);
         }
     }
 
