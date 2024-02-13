@@ -77,7 +77,44 @@ public static class InputValidator
             {
                 Logger.LogMessage("Input must be a positive integer!", "WARNING");
             }
-            else if (input >= 1 && max > 0)
+            else if (max > 0)
+            {
+                if (input <= max)
+                {
+                    break;
+                }
+                else
+                {
+                    Logger.LogMessage($"Input must be between 1 - {max}!", "WARNING");
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        return input;
+    }
+    
+    public static int MenuInteger(int max, string label)
+    {
+        int input = 0;
+        
+        while (true)
+        {
+            Console.Write($"\n {label}");
+            var i = Console.ReadLine();
+            
+            if (!int.TryParse(i, out input))
+            {
+                Logger.LogMessage("Please provide a valid number!", "WARNING");
+            } 
+            else if (input < 1)
+            {
+                Logger.LogMessage("Input must be a positive integer!", "WARNING");
+            }
+            else if (max > 0)
             {
                 if (input <= max)
                 {
