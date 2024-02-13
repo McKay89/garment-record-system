@@ -1,74 +1,79 @@
-﻿using System.Collections;
-using GarmentRecordSystem.Enums;
+﻿using GarmentRecordSystem.Enums;
 using GarmentRecordSystem.Service.Logger;
 using GarmentRecordSystem.Service.Products.Browser;
-using GarmentRecordSystem.Ui.Selector;
+using GarmentRecordSystem.Ui.Factory;
+using GarmentRecordSystem.Utils;
 
 namespace GarmentRecordSystem.Ui;
 
 public class AddGarmentUi : UiBase
 {
-    private IGarmentBrowser _garmentBrowser;
+    private readonly IGarmentBrowser _garmentBrowser;
     private readonly ILogger _logger = new ConsoleLogger();
+    private readonly SortedList<int, UiFactoryBase> _factories;
     
-    public AddGarmentUi(string title, IGarmentBrowser garmentBrowser) : base(title)
+    public AddGarmentUi(string title, IGarmentBrowser garmentBrowser, SortedList<int, UiFactoryBase> factories) : base(title)
     {
         _garmentBrowser = garmentBrowser;
+        _factories = factories;
     }
 
     public override void Run()
     {
         var collectedData = CollectData();
         bool result = _garmentBrowser.AddGarment(collectedData);
+
+        if (result)
+        {
+            _garmentBrowser.PrintAllGarment();
+            _logger.LogMessage("Garment successfully created! Return to Main Menu...", "SUCCESS");
+        }
+        else
+        {
+            _logger.LogMessage("An error occured! Return to Main Menu...", "ERROR");
+        }
         
-        _garmentBrowser.PrintAllGarment();
+        Thread.Sleep(2000);
+        ReturnToMainMenu();
     }
 
-    private List<Tuple<string, string, Sizes>> CollectData()
+    private void ReturnToMainMenu()
+    {
+        Navigator.MainMenu(_logger, _factories);
+    }
+
+    private List<Tuple<string?, string?, Sizes?>> CollectData()
     {
         // Get Brand Name
-        Console.Write(" Brand name: ");
-        var brand = Console.ReadLine();
+        var brand = "";
+        do
+        {
+            Console.Write(" Brand name: ");
+            brand = Console.ReadLine();
+        } while (InputValidator.Null(brand));
+        if (brand == "--back") ReturnToMainMenu();
         
         // Get Color
-        Console.Write(" Color: ");
-        var color = Console.ReadLine();
+        var color = "";
+        do
+        {
+            Console.Write(" Color: ");
+            color = Console.ReadLine();
+        } while (InputValidator.Null(color));
+        if (color == "--back") ReturnToMainMenu();
         
         // Get Size
-        var size = GetSizeInput();
+        var size = InputValidator.Size(" Size: ");
+        if (size == null)
+        {
+            ReturnToMainMenu();
+        }
 
-        var collectedData = new List<Tuple<string, string, Sizes>>
+        var collectedData = new List<Tuple<string?, string?, Sizes?>>
         {
             Tuple.Create(brand, color, size)!
         };
 
         return collectedData;
-    }
-    
-    private Sizes GetSizeInput()
-    {
-        Sizes selectedSize;
-        bool isValidSize = false;
-
-        do
-        {
-            Console.WriteLine(" Available sizes:");
-            foreach (Sizes size in Enum.GetValues(typeof(Sizes)))
-            {
-                Console.WriteLine($" - {size}");
-            }
-            Console.Write(" Size: ");
-            var userInput = Console.ReadLine();
-
-            isValidSize = Enum.TryParse(userInput, out selectedSize);
-
-            if (!isValidSize)
-            {
-                _logger.LogMessage("Invalid size! Please choose from the available options.", "WARNING");
-            }
-
-        } while (!isValidSize);
-
-        return selectedSize;
     }
 }
