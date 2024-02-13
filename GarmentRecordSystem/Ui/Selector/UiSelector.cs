@@ -1,5 +1,6 @@
 ﻿using GarmentRecordSystem.Service.Logger;
 using GarmentRecordSystem.Ui.Factory;
+using GarmentRecordSystem.Utils;
 
 namespace GarmentRecordSystem.Ui.Selector;
 
@@ -20,7 +21,8 @@ public class UiSelector
         Console.WriteLine(" 'garments.json' file loaded successfully");
         DisplayMenu();
         
-        int getChoice = GetIntInput();
+        var getChoice = InputValidator.MenuInteger(7, "Please choose: ");
+
         return _factories.Values[getChoice - 1].Create(_factories);
     }
 
@@ -32,36 +34,5 @@ public class UiSelector
         {
             _logger.LogMenu(fact.Key, fact.Value.UiName);
         }
-    }
-    
-    private int GetIntInput()
-    {
-        int input = 0;
-        
-        while (true)
-        {
-            Console.Write("\n Please choose: ");
-            var i = Console.ReadLine();
-            if (!int.TryParse(i, out input))
-            {
-                _logger.LogMessage("Please provide a valid number!", "WARNING");
-            } 
-            else if (input is < 1 or > 8)
-            {
-                _logger.LogMessage("Input must be between 1 - 8!", "WARNING");
-            }
-            else
-            {
-                break;
-            }
-        }
-
-        if (input == 8)
-        {
-            _logger.LogMessage("Application is now shutting down...", "INFO");
-            Environment.Exit(0);
-        }
-        
-        return input;
     }
 }
