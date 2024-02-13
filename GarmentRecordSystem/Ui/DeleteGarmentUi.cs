@@ -1,4 +1,5 @@
-﻿using GarmentRecordSystem.Enums;
+﻿using System.Runtime.InteropServices;
+using GarmentRecordSystem.Enums;
 using GarmentRecordSystem.Service.Logger;
 using GarmentRecordSystem.Service.Products.Browser;
 using GarmentRecordSystem.Ui.Factory;
@@ -20,11 +21,39 @@ public class DeleteGarmentUi : UiBase
 
     public override void Run()
     {
-        Console.WriteLine("Delete Garment");
+        // List available garments
+        _garmentBrowser.PrintAllGarment();
+        
+        // Try deletion
+        var garmentId = CollectData();
+        bool deleteGarment = _garmentBrowser.DeleteGarment(garmentId);
+        
+        if (deleteGarment)
+        {
+            _garmentBrowser.PrintAllGarment();
+            _logger.LogMessage("Garment successfully deleted! Return to Main Menu...", "SUCCESS");
+        }
+        else
+        {
+            _logger.LogMessage("An error occured! Return to Main Menu...", "ERROR");
+        }
+        
+        Thread.Sleep(2000);
+        ReturnToMainMenu();
     }
 
     private void ReturnToMainMenu()
     {
         Navigator.MainMenu(_logger, _factories);
+    }
+
+    private int? CollectData()
+    {
+        // Request garment ID
+        var getId = InputValidator.Integer();
+        
+        if (getId == null) ReturnToMainMenu();
+
+        return getId;
     }
 }
