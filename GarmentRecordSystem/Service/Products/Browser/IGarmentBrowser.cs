@@ -7,7 +7,7 @@ namespace GarmentRecordSystem.Service.Products.Browser;
 public interface IGarmentBrowser
 {
     IEnumerable<Garment>? GetAll();
-    Garment? SearchGarment(int id);
+    Garment? SearchGarment(int? id);
     
     void SortByBrandName();
     void SortByPurchaseDate();
@@ -15,7 +15,7 @@ public interface IGarmentBrowser
     void SortByColor();
     void PrintAllGarment();
     
-    bool AddGarment(List<Tuple<string, string, Sizes>> item);
-    bool UpdateGarment(int index, Garment newGarment);
+    bool AddGarment(List<Tuple<string?, string?, Sizes?>> item);
+    bool UpdateGarment(Garment? newGarment);
     bool DeleteGarment(int index);
 }
