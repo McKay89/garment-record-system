@@ -19,6 +19,11 @@ public static class Changes
         var changes = Tuple.Create(AddCounter, UpdateCounter, DeleteCounter, SortCounter);
         return changes;
     }
+
+    public static int GetChangeSum()
+    {
+        return AddCounter + UpdateCounter + DeleteCounter + SortCounter;
+    }
     
     public static void ResetCounters()
     {
