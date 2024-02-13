@@ -1,10 +1,18 @@
-﻿namespace GarmentRecordSystem.Service.Logger;
+﻿using GarmentRecordSystem.Model;
+
+namespace GarmentRecordSystem.Service.Logger;
 
 public class ConsoleLogger : ILogger
 {
     private static string CreateLogEntry(string message, string type) => $"\n [{type}] {message}";
     private static string CreateMenuEntry(int num, string title) => $"   [{num}] - {title}";
     private static string CreateMenuTitleEntry(string text) => $"\n ------ [ {text} ] ------";
+    private static string CreateGarmentEntry(Garment garment) => 
+        $"  Garment ID: {garment.GarmentId} || " +
+        $"Brand Name: {garment.BrandName} || " +
+        $"Purchase Date: {garment.PurchaseDate} || " +
+        $"Color: {garment.Color} || " +
+        $"Size: {garment.Size}";
 
     public void LogMessage(string message, string type)
     {
@@ -30,25 +38,22 @@ public class ConsoleLogger : ILogger
         Console.ResetColor();
     }
 
-    private void ChangeLogColor(string type)
+    public void LogGarment(Garment garment)
     {
-        switch (type)
+        var entry = CreateGarmentEntry(garment);
+        Console.WriteLine(entry);
+    }
+
+    private static void ChangeLogColor(string type)
+    {
+        Console.ForegroundColor = type switch
         {
-            case "INFO":
-                Console.ForegroundColor = ConsoleColor.Green;
-                break;
-            case "ERROR":
-                Console.ForegroundColor = ConsoleColor.Red;
-                break;
-            case "WARNING":
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                break;
-            case "TITLE":
-                Console.ForegroundColor = ConsoleColor.Blue;
-                break;
-            default:
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                break;
-        } 
+            "SUCCESS" => ConsoleColor.Green,
+            "INFO" => ConsoleColor.Magenta,
+            "ERROR" => ConsoleColor.Red,
+            "WARNING" => ConsoleColor.Yellow,
+            "TITLE" => ConsoleColor.Blue,
+            _ => ConsoleColor.Cyan
+        };
     }
 }
