@@ -3,5 +3,5 @@
 public abstract class UiFactoryBase
 {
     public abstract string UiName { get; }
-    public abstract UiBase Create();
+    public abstract UiBase Create(SortedList<int, UiFactoryBase> factories);
 }
