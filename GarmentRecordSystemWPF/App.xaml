@@ -8,10 +8,29 @@
             <SolidColorBrush x:Key="MainWindowBackgroudBrush" Color="#FF8E8E8E" />
             <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#FF404040" />
             <SolidColorBrush x:Key="ButtonForegroundBrush" Color="White" />
+            <SolidColorBrush x:Key="ButtonHoverBrush" Color="#FF151627" />
 
             <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
                 <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonHoverBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
