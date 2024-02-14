@@ -21,7 +21,7 @@
         <Grid Grid.Row="0" Grid.Column="0">
             <Button Content="Load JSON" Name="loadBtn" Width="80" Height="30"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                Margin="30 10 0 0"
+                Margin="30 10 0 0" Click="loadBtn_Click"
                 Style="{StaticResource ButtonStyle}" />
             <Button Content="Save JSON" Name="saveBtn" Width="80" Height="30"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
@@ -44,20 +44,39 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="270"/>
                 <ColumnDefinition Width="170" />
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
 
             <!-- Garment List Container -->
-            <ListView Grid.Column="1" />
-
+            <ListView Name="garmentsList" Grid.Column="1" 
+                      d:ItemsSource="{d:SampleData ItemCount=3}" 
+                      Background="#FFDAE2D2" Foreground="Black" 
+                      BorderBrush="Black" FontWeight="Bold">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="40" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding GarmentId}" Grid.Column="0" Margin="5" />
+                            <TextBlock Text="{Binding BrandName}" Grid.Column="1" Margin="5" />
+                            <TextBlock Text="{Binding Color}" Grid.Column="2" Margin="5" />
+                            <TextBlock Text="{Binding Size}" Grid.Column="3" Margin="5" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
 
             <Grid Grid.Column="2">
                 <!-- Search section -->
                 <TextBlock Text="Search by Garment ID" HorizontalAlignment="Left"
                            FontSize="13" FontWeight="Bold" Margin="18 0" />
-                <TextBox Width="150" Height="30" VerticalAlignment="Top"
+                <TextBox Width="150" Height="30" VerticalAlignment="Top" Name="searchInput"
                          Margin="16 25 0 0" FontSize="17" FontWeight="Bold" Padding="3"
                          TextAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"
                          IsEnabled="False"/>
@@ -68,7 +87,8 @@
                 <ComboBox IsEditable="True" 
                           IsReadOnly="False"
                           HorizontalAlignment="center" 
-                          VerticalAlignment="Top" 
+                          VerticalAlignment="Top"
+                          Name="sortInput"
                           Width="150" 
                           Height="30" 
                           Margin="16 95 0 0"
@@ -83,7 +103,7 @@
                 <!-- Add & Update && Delete buttons -->
                 <Button Content="ADD" HorizontalAlignment="Left"
                         Width="70" Height="30" Margin="16 130 0 0"
-                        IsEnabled="False"/>
+                        IsEnabled="False" Name="addBtn"/>
                 <Button Content="UPDATE" HorizontalAlignment="Right"
                         Width="70" Height="30" Margin="16 130 0 0"
                         IsEnabled="False"/>
