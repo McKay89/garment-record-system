@@ -65,6 +65,8 @@ public class GarmentBrowser : IGarmentBrowser
             _garments = sortedGarments;
 
             Changes.IncrementSortCounter();
+            
+            return true;
         }
         
         return false;
@@ -78,6 +80,8 @@ public class GarmentBrowser : IGarmentBrowser
             _garments = sortedGarments;
 
             Changes.IncrementSortCounter();
+            
+            return true;
         }
         
         return false;
