@@ -1,17 +1,24 @@
 [
   {
-    "GarmentId": 1,
-    "BrandName": "Nike",
-    "PurchaseDate": "2024-02-13",
-    "Color": "Red",
-    "Size": "M"
-  },
-  {
     "GarmentId": 2,
     "BrandName": "Adidas",
     "PurchaseDate": "2024-02-13",
     "Color": "Blue",
     "Size": "XXL"
+  },
+  {
+    "GarmentId": 5,
+    "BrandName": "Coca-Cola",
+    "PurchaseDate": "2024-02-13",
+    "Color": "Black",
+    "Size": "XXL"
+  },
+  {
+    "GarmentId": 1,
+    "BrandName": "Nike",
+    "PurchaseDate": "2024-02-13",
+    "Color": "Red",
+    "Size": "M"
   },
   {
     "GarmentId": 3,
@@ -28,10 +35,10 @@
     "Size": "XL"
   },
   {
-    "GarmentId": 5,
-    "BrandName": "Coca-Cola",
-    "PurchaseDate": "2024-02-13",
-    "Color": "Black",
-    "Size": "XXL"
+    "GarmentId": 6,
+    "BrandName": "McKay",
+    "PurchaseDate": "2024-02-14",
+    "Color": "Green",
+    "Size": "XL"
   }
 ]
