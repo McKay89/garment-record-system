@@ -141,4 +141,23 @@ public static class InputValidator
         return true;
 
     }
+
+    public static string ExitString(string label)
+    {
+        var result = "";
+        
+        do
+        {
+            Logger.LogMessage($"{label}", "WARNING");
+            Console.WriteLine("\n 'Y': Yes || 'N': No || '--back' Return to Main Menu");
+            Console.Write("\n Your choose: ");
+            var userInput = Console.ReadLine();
+
+            if (userInput is not ("y" or "Y" or "n" or "N" or "--back")) continue;
+            result = userInput;
+            break;
+        } while (true);
+
+        return result;
+    }
 }
