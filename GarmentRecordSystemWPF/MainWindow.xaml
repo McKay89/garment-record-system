@@ -5,23 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GarmentRecordSystemWPF"
         mc:Ignorable="d"
-        Title="Garment Record System" Height="450" Width="800" ResizeMode ="NoResize"
+        Title="Garment Record System" Height="400" Width="500"
+        MinHeight="400" MinWidth="500" MaxHeight="500" MaxWidth="900"
         Background="{DynamicResource MainWindowBackgroudBrush}">
     <Grid>
-        <Button Content="Load" Width="80" Height="30"
+        <!-- Main Grid Definitions -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55" />
+            <RowDefinition Height="30" />
+            <RowDefinition />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <!-- Menu Bar -->
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Button Content="Load JSON" Name="loadBtn" Width="80" Height="30"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                Margin="30 30 0 0"
+                Margin="30 10 0 0"
                 Style="{StaticResource ButtonStyle}" />
-        <Button Content="Save" Width="80" Height="30"
+            <Button Content="Save JSON" Name="saveBtn" Width="80" Height="30"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                Margin="130 30 0 0"
-                Style="{StaticResource ButtonStyle}" />
-        <Button Content="Exit" Width="80" Height="30"
+                Margin="130 10 0 0"
+                Style="{StaticResource ButtonStyle}" IsEnabled="False" />
+            <Button Content="Exit" Name="exitBtn" Width="80" Height="30"
                 VerticalAlignment="Top" HorizontalAlignment="Right"
-                Margin="0 30 30 0"
+                Margin="0 10 30 0" Click="exitBtn_Click"
                 Style="{StaticResource ButtonStyle}" />
-        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top"
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top"
                    Fill="Black" Height="4" 
-                   Margin="0 85 0 0" />
+                   Margin="0 50 0 0" />
+        </Grid>
+
+        <!-- Content Section -->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <!-- Content Section Definitions -->
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="170" />
+                <ColumnDefinition Width="30" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Garment List Container -->
+            <ListView Grid.Column="1" />
+
+
+            <Grid Grid.Column="2">
+                <TextBlock Text="Search by Garment ID" HorizontalAlignment="Center"
+                           FontSize="13" FontWeight="Bold" />
+                <TextBox Width="150" Height="30" VerticalAlignment="Top"
+                         Margin="18 25 0 0" FontSize="17" FontWeight="Bold" Padding="3"
+                         TextAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput" />
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
