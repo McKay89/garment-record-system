@@ -20,7 +20,7 @@ public class UiFactory
         UiFactoryBase searchGarmentUiFactory = new SearchGarmentUiFactory(_garmentBrowser);
         UiFactoryBase sortGarmentUiFactory = new SortGarmentUiFactory(_garmentBrowser);
         UiFactoryBase saveGarmentUiFactory = new SaveGarmentUiFactory(_garmentBrowser);
-        UiFactoryBase exitGarmentUiFactory = new ExitGarmentUiFactory();
+        UiFactoryBase exitGarmentUiFactory = new ExitGarmentUiFactory(_garmentBrowser);
     
         var factories = new SortedList<int, UiFactoryBase>
         {
