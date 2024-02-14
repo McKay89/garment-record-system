@@ -11,9 +11,9 @@ public class GarmentBrowser : IGarmentBrowser
     private List<Garment> _garments;
     private readonly ILogger _logger;
     
-    public GarmentBrowser(List<GarmentJson>? garments, ILogger logger)
+    public GarmentBrowser(List<GarmentJson> garments, ILogger logger)
     {
-        _garments = garments != null ? CreateGarmentList(garments) : new List<Garment>();
+        _garments = garments.Any() ? CreateGarmentList(garments) : new List<Garment>();
         _logger = logger;
     }
     
