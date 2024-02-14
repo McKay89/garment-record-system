@@ -32,6 +32,24 @@ public class SaveGarmentUi : UiBase
             ReturnToMainMenu();
         }
         
+        // Save changes
+        bool resultSave = SaveChanges(changes);
+
+        if (resultSave)
+        {
+            _logger.LogMessage("Data successfully saved into JSON !", "SUCCESS");
+            Changes.ResetCounters();
+            WaitForKeypress();
+        }
+        else
+        {
+            _logger.LogMessage("The data was not saved !", "ERROR");
+            WaitForKeypress();
+        }
+    }
+
+    private bool SaveChanges(Tuple<int, int, int, int> changes)
+    {
         // Log the changes
         _logger.LogMessage("Saving into the JSON...", "INFO");
         Console.WriteLine($"  Changes: " + 
@@ -44,17 +62,7 @@ public class SaveGarmentUi : UiBase
         var allGarments = _garmentBrowser.GetAll();
         bool saveResult = JsonFileWriter.Write(allGarments);
 
-        if (saveResult)
-        {
-            _logger.LogMessage("Data successfully saved into JSON !", "SUCCESS");
-            Changes.ResetCounters();
-            WaitForKeypress();
-        }
-        else
-        {
-            _logger.LogMessage("The data was not saved !", "ERROR");
-            WaitForKeypress();
-        }
+        return saveResult;
     }
 
     private void ReturnToMainMenu()
