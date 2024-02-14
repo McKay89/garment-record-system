@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GarmentRecordSystemWPF"
         mc:Ignorable="d"
         Title="Garment Record System" Height="400" Width="500"
-        MinHeight="400" MinWidth="500" MaxHeight="500" MaxWidth="900"
+        ResizeMode="NoResize"
         Background="{DynamicResource MainWindowBackgroudBrush}">
     <Grid>
         <!-- Main Grid Definitions -->
@@ -54,11 +54,42 @@
 
 
             <Grid Grid.Column="2">
-                <TextBlock Text="Search by Garment ID" HorizontalAlignment="Center"
-                           FontSize="13" FontWeight="Bold" />
+                <!-- Search section -->
+                <TextBlock Text="Search by Garment ID" HorizontalAlignment="Left"
+                           FontSize="13" FontWeight="Bold" Margin="18 0" />
                 <TextBox Width="150" Height="30" VerticalAlignment="Top"
-                         Margin="18 25 0 0" FontSize="17" FontWeight="Bold" Padding="3"
-                         TextAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput" />
+                         Margin="16 25 0 0" FontSize="17" FontWeight="Bold" Padding="3"
+                         TextAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"
+                         IsEnabled="False"/>
+
+                <!-- Sort section -->
+                <TextBlock Text="Sort Garments by" HorizontalAlignment="Left"
+                           FontSize="13" FontWeight="Bold" Margin="18 70" />
+                <ComboBox IsEditable="True" 
+                          IsReadOnly="False"
+                          HorizontalAlignment="center" 
+                          VerticalAlignment="Top" 
+                          Width="150" 
+                          Height="30" 
+                          Margin="16 95 0 0"
+                          IsEnabled="False">
+                    <ComboBoxItem>Garment ID</ComboBoxItem>
+                    <ComboBoxItem>Brand Name</ComboBoxItem>
+                    <ComboBoxItem>Purchase Date</ComboBoxItem>
+                    <ComboBoxItem>Color</ComboBoxItem>
+                    <ComboBoxItem>Size</ComboBoxItem>
+                </ComboBox>
+                
+                <!-- Add & Update && Delete buttons -->
+                <Button Content="ADD" HorizontalAlignment="Left"
+                        Width="70" Height="30" Margin="16 130 0 0"
+                        IsEnabled="False"/>
+                <Button Content="UPDATE" HorizontalAlignment="Right"
+                        Width="70" Height="30" Margin="16 130 0 0"
+                        IsEnabled="False"/>
+                <Button Content="DELETE" HorizontalAlignment="Center"
+                        Width="155" Height="30" Margin="16 210 0 0"
+                        IsEnabled="False"/>
             </Grid>
         </Grid>
     </Grid>
