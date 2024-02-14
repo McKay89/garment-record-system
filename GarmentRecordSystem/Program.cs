@@ -11,10 +11,16 @@ ILogger logger = new ConsoleLogger();
 // Read JSON file (every garment is an object)
 var garmentsJson = JsonFileReader.Read(@"../../../garments.json");
 
+// Handle if garmentJson is NULL
+if (garmentsJson == null)
+{
+    logger.LogMessage("An error occured while opening JSON file. Application is shutting down...", "ERROR");
+    Thread.Sleep(2000);
+    Environment.Exit(0);
+}
+
 // Create Garment Browser instance
-IGarmentBrowser garmentBrowser = garmentsJson is { Count: 0 } or null
-    ? new GarmentBrowser(new List<GarmentJson>(), logger)
-    : new GarmentBrowser(garmentsJson, logger);
+IGarmentBrowser garmentBrowser = new GarmentBrowser(garmentsJson, logger);
 
 // Create UI Factories
 UiFactory uiFactory = new UiFactory(garmentBrowser);
