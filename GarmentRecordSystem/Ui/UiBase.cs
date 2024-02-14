@@ -20,7 +20,10 @@ public abstract class UiBase
 
     public void PrintSubmenuInfos()
     {
-        Console.WriteLine(" Type '--back' if you want to return to Main Menu\n");
+        if (_title != "Save" && _title != "Exit")
+        {
+            Console.WriteLine(" Type '--back' if you want to return to Main Menu\n");
+        }
     }
     
     public abstract void Run();
