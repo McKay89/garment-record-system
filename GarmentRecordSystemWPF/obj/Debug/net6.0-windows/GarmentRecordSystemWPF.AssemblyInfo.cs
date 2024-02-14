@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GarmentRecordSystemWPF")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0b28da76aacae5ff4dc5fdcbc34fe8d4286b8bc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5433744d392af3ca85b489542a290e555373da7a")]
 [assembly: System.Reflection.AssemblyProductAttribute("GarmentRecordSystemWPF")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GarmentRecordSystemWPF")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
