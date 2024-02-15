@@ -16,7 +16,7 @@ public interface IGarmentBrowser
     void PrintAllGarment();
     void PrintGarment(Garment garment);
     
-    bool AddGarment(List<Tuple<string?, string?, Sizes?>> item);
+    bool AddGarment(List<Tuple<string?, DateOnly?, string?, Sizes?>> item);
     bool UpdateGarment(Garment? newGarment);
     bool DeleteGarment(int? garmentId);
 }
