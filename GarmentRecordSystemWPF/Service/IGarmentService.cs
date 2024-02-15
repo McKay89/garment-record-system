@@ -20,7 +20,7 @@ namespace GarmentRecordSystemWPF.Service
         List<Garment> SortByColor();
 
         bool AddGarment(List<Tuple<string, DateOnly, string, Sizes>> item);
-        bool UpdateGarment(Garment? newGarment);
+        bool UpdateGarment(Garment newGarment);
         bool DeleteGarment(int? garmentId);
     }
 }
