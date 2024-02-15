@@ -103,11 +103,13 @@
         <!-- Cancel Button -->
         <Button Content="Cancel" Height="30" Width="90" Name="CancelBtn"
                 VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                Margin="25 20" Click="CancelBtn_Click"/>
+                Margin="25 20" Click="CancelBtn_Click"
+                Style="{StaticResource DeleteButtonStyle}"/>
 
         <!-- Save Button -->
         <Button Content="Update" Height="30" Width="90" Name="UpdateBtn"
                 VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                Margin="25 20" Click="UpdateBtn_Click"/>
+                Margin="25 20" Click="UpdateBtn_Click"
+                Style="{StaticResource AddButtonStyle}"/>
     </Grid>
 </Window>
