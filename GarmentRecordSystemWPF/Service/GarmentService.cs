@@ -69,9 +69,24 @@ namespace GarmentRecordSystemWPF.Service
             }
         }
 
-        public IEnumerable<Garment>? GetAll()
+        public IEnumerable<Garment> GetAll()
         {
             return _garments;
+        }
+
+        public IEnumerable<GarmentJson> GetAllAsJson()
+        {
+            foreach (var garment in _garments)
+            {
+                yield return new GarmentJson()
+                {
+                    GarmentId = garment.GarmentId,
+                    BrandName = garment.BrandName,
+                    PurchaseDate = garment.PurchaseDate.ToString(),
+                    Color = garment.Color,
+                    Size = garment.Size.ToString(),
+                };
+            }
         }
 
         public int GetGarmentCount()
