@@ -10,7 +10,8 @@ namespace GarmentRecordSystemWPF.Service
 {
     internal interface IGarmentService
     {
-        IEnumerable<Garment>? GetAll();
+        IEnumerable<Garment> GetAll();
+        IEnumerable<GarmentJson> GetAllAsJson();
         List<Garment> SearchGarment(int id);
 
         int GetGarmentCount();
