@@ -42,7 +42,7 @@ public class AddGarmentUi : UiBase
         Navigator.MainMenu(_logger, _factories);
     }
 
-    private List<Tuple<string?, string?, Sizes?>> CollectData()
+    private List<Tuple<string?, DateOnly?, string?, Sizes?>> CollectData()
     {
         // Get Brand Name
         var brand = "";
@@ -52,6 +52,13 @@ public class AddGarmentUi : UiBase
             brand = Console.ReadLine();
         } while (InputValidator.Null(brand));
         if (brand == "--back") ReturnToMainMenu();
+        
+        // Get Purchase Date
+        var date = InputValidator.Date(" Purchase Date: ");
+        if (date == null)
+        {
+            ReturnToMainMenu();
+        }
         
         // Get Color
         var color = "";
@@ -69,9 +76,9 @@ public class AddGarmentUi : UiBase
             ReturnToMainMenu();
         }
 
-        var collectedData = new List<Tuple<string?, string?, Sizes?>>
+        var collectedData = new List<Tuple<string?, DateOnly?, string?, Sizes?>>
         {
-            Tuple.Create(brand, color, size)!
+            Tuple.Create(brand, date, color, size)!
         };
 
         return collectedData;
