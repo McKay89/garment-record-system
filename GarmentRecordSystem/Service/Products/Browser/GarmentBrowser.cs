@@ -87,7 +87,7 @@ public class GarmentBrowser : IGarmentBrowser
         return false;
     }
 
-    public bool AddGarment(List<Tuple<string?, string?, Sizes?>> item)
+    public bool AddGarment(List<Tuple<string?, DateOnly?, string?, Sizes?>> item)
     {
         try
         {
@@ -96,9 +96,9 @@ public class GarmentBrowser : IGarmentBrowser
             {
                 GarmentId = maxGarmentId + 1,
                 BrandName = item[0].Item1 ?? "Unknown",
-                PurchaseDate = DateOnly.FromDateTime(DateTime.Now),
-                Color = item[0].Item2 ?? "Unknown",
-                Size = item[0].Item3 ?? (Sizes)Enum.Parse(typeof(Sizes), "S")
+                PurchaseDate = item[0].Item2 ?? DateOnly.Parse("0001. 01. 01."),
+                Color = item[0].Item3 ?? "Unknown",
+                Size = item[0].Item4 ?? (Sizes)Enum.Parse(typeof(Sizes), "S")
             });
             Changes.IncrementAddCounter();
             return true;
