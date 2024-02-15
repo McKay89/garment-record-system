@@ -1,7 +1,9 @@
 ﻿using GarmentRecordSystemWPF.Enums;
 using GarmentRecordSystemWPF.Model;
+using GarmentRecordSystemWPF.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +26,29 @@ namespace GarmentRecordSystemWPF.Service
 
         public bool DeleteGarment(int? garmentId)
         {
-            throw new NotImplementedException();
+            if (garmentId == null) return false;
+
+            try
+            {
+                var existingGarment = _garments.FirstOrDefault(g => g.GarmentId == garmentId);
+
+                if (existingGarment != null)
+                {
+                    int index = _garments.IndexOf(existingGarment);
+                    _garments.RemoveAt(index);
+
+                    Changes.IncrementDeleteCounter();
+                    return true;
+                }
+
+                return false;
+
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine($"{e}");
+                return false;
+            }
         }
 
         public IEnumerable<Garment>? GetAll()
@@ -40,27 +64,67 @@ namespace GarmentRecordSystemWPF.Service
             return found != null ? new List<Garment>() { found } : new List<Garment>();
         }
 
-        IEnumerable<Garment>? IGarmentService.SortByBrandName()
+        public List<Garment> SortByGarmentId()
         {
-            throw new NotImplementedException();
+            if (_garments.Count > 1)
+            {
+                _garments = _garments.OrderBy(g => g.GarmentId).ToList();
+
+                Changes.IncrementSortCounter();
+            }
+
+            return _garments;
         }
 
-        IEnumerable<Garment>? IGarmentService.SortByColor()
+        public List<Garment> SortByBrandName()
         {
-            throw new NotImplementedException();
+            if (_garments.Count > 1)
+            {
+                _garments = _garments.OrderBy(g => g.BrandName).ToList();
+
+                Changes.IncrementSortCounter();
+            }
+
+            return _garments;
         }
 
-        IEnumerable<Garment>? IGarmentService.SortByPurchaseDate()
+        public List<Garment> SortByColor()
         {
-            throw new NotImplementedException();
+            if (_garments.Count > 1)
+            {
+                _garments = _garments.OrderBy(g => g.Color).ToList();
+
+                Changes.IncrementSortCounter();
+            }
+
+            return _garments;
         }
 
-        IEnumerable<Garment>? IGarmentService.SortBySize()
+        public List<Garment> SortByPurchaseDate()
         {
-            throw new NotImplementedException();
+            if (_garments.Count > 1)
+            {
+                _garments = _garments.OrderBy(g => g.PurchaseDate).ToList();
+
+                Changes.IncrementSortCounter();
+            }
+
+            return _garments;
         }
 
-        bool IGarmentService.UpdateGarment(Garment? newGarment)
+        public List<Garment> SortBySize()
+        {
+            if (_garments.Count > 1)
+            {
+                _garments = _garments.OrderBy(g => g.Size).ToList();
+
+                Changes.IncrementSortCounter();
+            }
+
+            return _garments;
+        }
+
+        public bool UpdateGarment(Garment? newGarment)
         {
             throw new NotImplementedException();
         }
