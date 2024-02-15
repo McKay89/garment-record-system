@@ -28,7 +28,7 @@
                 Style="{StaticResource ButtonStyle}" />
             <Button Content="Save JSON" Name="saveBtn" Width="80" Height="30"
                 VerticalAlignment="Top" HorizontalAlignment="Left"
-                Margin="130 10 0 0"
+                Margin="130 10 0 0" Click="saveBtn_Click"
                 Style="{StaticResource ButtonStyle}" IsEnabled="False" />
             <Button Content="Exit" Name="exitBtn" Width="80" Height="30"
                 VerticalAlignment="Top" HorizontalAlignment="Right"
@@ -139,13 +139,16 @@
                 <!-- Add & Update & Delete buttons -->
                 <Button Content="ADD" HorizontalAlignment="Left"
                         Width="70" Height="30" Margin="16 130 0 0"
-                        IsEnabled="False" Name="addBtn" Click="addBtn_Click"/>
+                        IsEnabled="False" Name="addBtn" Click="addBtn_Click"
+                        Style="{StaticResource AddButtonStyle}"/>
                 <Button Content="UPDATE" HorizontalAlignment="Right"
                         Width="70" Height="30" Margin="16 130 0 0"
-                        IsEnabled="False" Name="updateBtn" Click="updateBtn_Click"/>
+                        IsEnabled="False" Name="updateBtn" Click="updateBtn_Click"
+                        Style="{StaticResource UpdateButtonStyle}"/>
                 <Button Content="DELETE" HorizontalAlignment="Center"
                         Width="155" Height="30" Margin="16 210 0 0"
-                        IsEnabled="False" Name="deleteBtn" Click="deleteBtn_Click"/>
+                        IsEnabled="False" Name="deleteBtn" Click="deleteBtn_Click"
+                        Style="{StaticResource DeleteButtonStyle}"/>
             </Grid>
         </Grid>
     </Grid>
