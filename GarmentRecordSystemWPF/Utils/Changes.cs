@@ -16,7 +16,7 @@ namespace GarmentRecordSystemWPF.Utils
         public static void IncrementAddCounter() => AddCounter++;
         public static void IncrementUpdateCounter() => UpdateCounter++;
         public static void IncrementDeleteCounter() => DeleteCounter++;
-        public static void IncrementSortCounter() => SortCounter++;
+        public static void IncrementSortCounter() => SortCounter = 1;
 
         public static Tuple<int, int, int, int> GetChanges()
         {
