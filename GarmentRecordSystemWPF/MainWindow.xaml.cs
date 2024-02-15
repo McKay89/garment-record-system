@@ -2,7 +2,6 @@
 using GarmentRecordSystemWPF.Model;
 using GarmentRecordSystemWPF.Service;
 using GarmentRecordSystemWPF.Utils;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,7 +13,6 @@ namespace GarmentRecordSystemWPF
         private List<GarmentJson> garmentJson;
         private IGarmentService? garmentService;
         private Garment? selectedGarment;
-        private int selectedGarmentIndex;
 
         public MainWindow()
         {
@@ -30,14 +28,19 @@ namespace GarmentRecordSystemWPF
 
             if (garmentJson != null)
             {
+                // Change button & statistics statuses
                 unsavedChanges.Visibility = Visibility.Visible;
                 countGarments.Visibility = Visibility.Visible;
                 jsonLoaded.Visibility = Visibility.Visible;
+                loadBtn.IsEnabled = false;
+                saveBtn.IsEnabled = true;
+
                 CreateGarmentService();
                 RefreshUi();
             } else
             {
-                // TODO: Handle error
+                // JSON can't be loaded, exit application
+                Environment.Exit(0);
             }
         }
 
@@ -153,14 +156,13 @@ namespace GarmentRecordSystemWPF
 
             }
 
-            SetButtonsStatus();
+            RefreshUi();
         }
 
         private void garmentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Get selected ListView item
             ListView listView = (ListView)sender;
-            selectedGarmentIndex = listView.SelectedIndex;
             selectedGarment = (Garment)listView.SelectedItem;
 
             // Enable Update & Delete buttons
@@ -201,19 +203,40 @@ namespace GarmentRecordSystemWPF
 
         private void searchInput_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            SetButtonsStatus();
+            RefreshUi();
         }
 
         private void sortInput_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            SetButtonsStatus();
+            RefreshUi();
         }
 
         private void RefreshUi()
         {
+            // Refreshing the UI components
             RefreshGarmentList("");
             SetButtonsStatus();
             RefreshStatistics();
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshUi();
+
+            var allGarments = garmentService?.GetAllAsJson() ?? new List<GarmentJson>();
+
+            bool resultSave = JsonFileController.Write(allGarments);
+
+            if(resultSave)
+            {
+                Popup.Alert("Success", "Data successfully saved into JSON !");
+                Changes.ResetCounters();
+            } else
+            {
+                Popup.Alert("Error", "Can't save data ! Please try again !");
+            }
+
+            RefreshUi();
         }
     }
 }
