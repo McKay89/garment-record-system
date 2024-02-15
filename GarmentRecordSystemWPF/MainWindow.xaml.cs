@@ -30,9 +30,11 @@ namespace GarmentRecordSystemWPF
 
             if (garmentJson != null)
             {
+                unsavedChanges.Visibility = Visibility.Visible;
+                countGarments.Visibility = Visibility.Visible;
+                jsonLoaded.Visibility = Visibility.Visible;
                 CreateGarmentService();
-                SetButtonsStatus();
-                RefreshGarmentList("");
+                RefreshUi();
             } else
             {
                 // TODO: Handle error
@@ -41,8 +43,20 @@ namespace GarmentRecordSystemWPF
 
         private void exitBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Exit application
-            Environment.Exit(0);
+            int changes = Changes.GetChangeSum();
+
+            if(changes > 0)
+            {
+                if(Popup.Confirm("Exit", $"There are {changes} unsaved changes\n Are you sure you want to exit?"))
+                {
+                    // Exit application
+                    Environment.Exit(0);
+                }
+            } else
+            {
+                // Exit application
+                Environment.Exit(0);
+            }
         }
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -85,24 +99,16 @@ namespace GarmentRecordSystemWPF
             }
         }
 
+        private void RefreshStatistics()
+        {
+            changesNum.Text = Changes.GetChangeSum().ToString();
+            garmentNum.Text = garmentService?.GetGarmentCount().ToString();
+        }
+
         private void CreateGarmentService()
         {
             // Create GarmentService instance
             garmentService = new GarmentService(garmentJson);
-        }
-
-        private void DisableButtons()
-        {
-            // Disable Update & Delete buttons
-            updateBtn.IsEnabled = false;
-            deleteBtn.IsEnabled = false;
-        }
-
-        private void FocusGarment()
-        {
-            // Focus the lastly selected garment
-            garmentList.Focus();
-            garmentList.SelectedIndex = selectedGarmentIndex;
         }
 
         private void searchInput_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -112,7 +118,7 @@ namespace GarmentRecordSystemWPF
             string searchText = textBox.Text;
             RefreshGarmentList(searchText);
 
-            DisableButtons();
+            SetButtonsStatus();
         }
 
         private void sortInput_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -147,7 +153,7 @@ namespace GarmentRecordSystemWPF
 
             }
 
-            DisableButtons();
+            SetButtonsStatus();
         }
 
         private void garmentList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -185,8 +191,6 @@ namespace GarmentRecordSystemWPF
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            DisableButtons();
-
             AddGarmentWindow addGarmentWindow = new AddGarmentWindow(garmentService);
             addGarmentWindow.Owner = this;
             addGarmentWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -197,18 +201,19 @@ namespace GarmentRecordSystemWPF
 
         private void searchInput_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            DisableButtons();
+            SetButtonsStatus();
         }
 
         private void sortInput_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            DisableButtons();
+            SetButtonsStatus();
         }
 
         private void RefreshUi()
         {
             RefreshGarmentList("");
-            DisableButtons();
+            SetButtonsStatus();
+            RefreshStatistics();
         }
     }
 }
