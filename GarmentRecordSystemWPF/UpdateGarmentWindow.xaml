@@ -1,0 +1,113 @@
+﻿<Window x:Class="GarmentRecordSystemWPF.UpdateGarmentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GarmentRecordSystemWPF"
+        mc:Ignorable="d"
+        Title="Update a Garment" Height="350" Width="250" ResizeMode="NoResize"
+        Background="{DynamicResource MainWindowBackgroudBrush}">
+    <Grid>
+        <!-- Title -->
+        <TextBlock Text="Update selected Garment" HorizontalAlignment="Center"
+                   Margin="0 10 0 0" FontSize="18" FontWeight="Bold"/>
+
+        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                   Fill="Black" Height="2" 
+                   Margin="0 50 0 0" />
+
+        <!-- Brand Name -->
+        <TextBox Width="200" Height="30"
+                 VerticalAlignment="Top" HorizontalAlignment="Center"
+                 x:Name="brandNameInput" Margin="0 70 0 0" 
+                 TextAlignment="Center" FontSize="18" FontWeight="Black"/>
+        <TextBlock IsHitTestVisible="False" Text="Enter Brand Name"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   Margin="58,75,0,0" Foreground="DarkGray"
+                   FontSize="15" FontWeight="Black">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=brandNameInput}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!-- Purchase Date -->
+        <TextBox Width="200" Height="30" 
+                 VerticalAlignment="Top" HorizontalAlignment="Center"
+                 x:Name="purchaseDateInput" Margin="0 110 0 0" 
+                 TextAlignment="Center" FontSize="18" FontWeight="Black"/>
+        <TextBlock IsHitTestVisible="False" Text="Enter Purchase Date"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   Margin="50,115,0,0" Foreground="DarkGray"
+                   FontSize="15" FontWeight="Black">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=purchaseDateInput}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!-- Color -->
+        <TextBox Width="200" Height="30" 
+                 VerticalAlignment="Top" HorizontalAlignment="Center"
+                 x:Name="colorInput" Margin="0 150 0 0" 
+                 TextAlignment="Center" FontSize="18" FontWeight="Black"/>
+        <TextBlock IsHitTestVisible="False" Text="Enter Color"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   Margin="83,155,0,0" Foreground="DarkGray"
+                   FontSize="15" FontWeight="Black">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=colorInput}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!-- Size -->
+        <TextBox Width="200" Height="30" 
+                 VerticalAlignment="Top" HorizontalAlignment="Center"
+                 x:Name="sizeInput" Margin="0 190 0 0" 
+                 TextAlignment="Center" FontSize="18" FontWeight="Black"/>
+        <TextBlock IsHitTestVisible="False" Text="Enter Size"
+                   VerticalAlignment="Top" HorizontalAlignment="Left"
+                   Margin="88,195,0,0" Foreground="DarkGray"
+                   FontSize="15" FontWeight="Black">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=sizeInput}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!-- Cancel Button -->
+        <Button Content="Cancel" Height="30" Width="90" Name="CancelBtn"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                Margin="25 20" Click="CancelBtn_Click"/>
+
+        <!-- Save Button -->
+        <Button Content="Update" Height="30" Width="90" Name="UpdateBtn"
+                VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                Margin="25 20" Click="UpdateBtn_Click"/>
+    </Grid>
+</Window>
