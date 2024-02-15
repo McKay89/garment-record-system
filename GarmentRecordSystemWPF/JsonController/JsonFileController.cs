@@ -1,4 +1,5 @@
 ﻿using GarmentRecordSystemWPF.Model;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
@@ -6,7 +7,7 @@ namespace GarmentRecordSystemWPF.JsonController
 {
     internal static class JsonFileController
     {
-        private static readonly string _filePath = "../../../garments.json";
+        private static readonly string _filePath = "./garments.json";
 
         public static List<GarmentJson> Read()
         {
@@ -24,8 +25,10 @@ namespace GarmentRecordSystemWPF.JsonController
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine($"File not found: {_filePath}");
-                Environment.Exit(1);   
+                Trace.WriteLine($"File not found: {_filePath}");
+                File.WriteAllText(_filePath, "");
+
+                return new List<GarmentJson>();
             }
             catch (JsonException)
             {
