@@ -13,10 +13,11 @@ namespace GarmentRecordSystemWPF.Service
         IEnumerable<Garment>? GetAll();
         List<Garment> SearchGarment(int id);
 
-        IEnumerable<Garment>? SortByBrandName();
-        IEnumerable<Garment>? SortByPurchaseDate();
-        IEnumerable<Garment>? SortBySize();
-        IEnumerable<Garment>? SortByColor();
+        List<Garment> SortByGarmentId();
+        List<Garment> SortByBrandName();
+        List<Garment> SortByPurchaseDate();
+        List<Garment> SortBySize();
+        List<Garment> SortByColor();
 
         bool AddGarment(List<Tuple<string?, string?, Sizes?>> item);
         bool UpdateGarment(Garment? newGarment);
