@@ -170,6 +170,7 @@ namespace GarmentRecordSystemWPF
             {
                 garmentService?.DeleteGarment(selectedGarment?.GarmentId);
                 ListGarments("");
+                Popup.Alert("Success", "Garment successfully deleted !");
             }
         }
 
@@ -181,6 +182,13 @@ namespace GarmentRecordSystemWPF
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
             DisableButtons();
+
+            AddGarmentWindow addGarmentWindow = new AddGarmentWindow(garmentService);
+            addGarmentWindow.Owner = this;
+            addGarmentWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            bool creationResult = addGarmentWindow.ShowDialog() ?? false;
+
+            if (creationResult) ListGarments("");
         }
 
         private void searchInput_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
