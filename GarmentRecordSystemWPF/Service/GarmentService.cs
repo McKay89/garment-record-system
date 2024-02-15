@@ -19,9 +19,27 @@ namespace GarmentRecordSystemWPF.Service
             _garments = garments.Any() ? CreateGarmentList(garments) : new List<Garment>();
         }
 
-        public bool AddGarment(List<Tuple<string?, string?, Sizes?>> item)
+        public bool AddGarment(List<Tuple<string, DateOnly, string, Sizes>> item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int maxGarmentId = _garments.Count == 0 ? 0 : _garments.Max(g => g.GarmentId);
+                _garments?.Add(new Garment()
+                {
+                    GarmentId = maxGarmentId + 1,
+                    BrandName = item[0].Item1,
+                    PurchaseDate = item[0].Item2,
+                    Color = item[0].Item3,
+                    Size = item[0].Item4
+                });
+                Changes.IncrementAddCounter();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+                return false;
+            }
         }
 
         public bool DeleteGarment(int? garmentId)
