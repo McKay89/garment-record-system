@@ -32,7 +32,7 @@ namespace GarmentRecordSystemWPF
             {
                 CreateGarmentService();
                 SetButtonsStatus();
-                ListGarments("");
+                RefreshGarmentList("");
             } else
             {
                 // TODO: Handle error
@@ -70,7 +70,7 @@ namespace GarmentRecordSystemWPF
             deleteBtn.IsEnabled = false;
         }
 
-        private void ListGarments(string garmentId)
+        private void RefreshGarmentList(string garmentId)
         {
             garmentList.ItemsSource = new List<string>();
 
@@ -110,7 +110,7 @@ namespace GarmentRecordSystemWPF
             // Check Search input when it changed
             TextBox textBox = (TextBox)sender;
             string searchText = textBox.Text;
-            ListGarments(searchText);
+            RefreshGarmentList(searchText);
 
             DisableButtons();
         }
@@ -164,19 +164,23 @@ namespace GarmentRecordSystemWPF
 
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            FocusGarment();
-
             if (Popup.Confirm("Delete", "Are you sure you want to delete the selected item?"))
             {
                 garmentService?.DeleteGarment(selectedGarment?.GarmentId);
-                ListGarments("");
                 Popup.Alert("Success", "Garment successfully deleted !");
             }
+
+            RefreshUi();
         }
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
-            FocusGarment();
+            UpdateGarmentWindow updateGarmentWindow = new UpdateGarmentWindow(garmentService, selectedGarment);
+            updateGarmentWindow.Owner = this;
+            updateGarmentWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            bool updateResult = updateGarmentWindow.ShowDialog() ?? false;
+
+            RefreshUi();
         }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
@@ -188,7 +192,7 @@ namespace GarmentRecordSystemWPF
             addGarmentWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             bool creationResult = addGarmentWindow.ShowDialog() ?? false;
 
-            if (creationResult) ListGarments("");
+            RefreshUi();
         }
 
         private void searchInput_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -198,6 +202,12 @@ namespace GarmentRecordSystemWPF
 
         private void sortInput_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
+            DisableButtons();
+        }
+
+        private void RefreshUi()
+        {
+            RefreshGarmentList("");
             DisableButtons();
         }
     }
