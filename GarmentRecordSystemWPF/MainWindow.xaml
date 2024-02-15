@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GarmentRecordSystemWPF"
         mc:Ignorable="d"
-        Title="Garment Record System" Height="400" Width="500"
+        Title="Garment Record System" Height="400" Width="700"
         ResizeMode="NoResize"
         Background="{DynamicResource MainWindowBackgroudBrush}">
     <Grid>
@@ -44,29 +44,32 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30" />
-                <ColumnDefinition Width="270"/>
+                <ColumnDefinition Width="470"/>
                 <ColumnDefinition Width="170" />
                 <ColumnDefinition Width="30" />
             </Grid.ColumnDefinitions>
 
             <!-- Garment List Container -->
-            <ListView Name="garmentsList" Grid.Column="1" 
+            <ListView Name="garmentList" Grid.Column="1" 
                       d:ItemsSource="{d:SampleData ItemCount=3}" 
                       Background="#FFDAE2D2" Foreground="Black" 
-                      BorderBrush="Black" FontWeight="Bold">
+                      BorderBrush="Black" FontWeight="Bold"
+                      SelectionChanged="garmentList_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition Width="90" />
-                                <ColumnDefinition Width="90" />
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="120" />
                                 <ColumnDefinition Width="40" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="{Binding GarmentId}" Grid.Column="0" Margin="5" />
                             <TextBlock Text="{Binding BrandName}" Grid.Column="1" Margin="5" />
-                            <TextBlock Text="{Binding Color}" Grid.Column="2" Margin="5" />
-                            <TextBlock Text="{Binding Size}" Grid.Column="3" Margin="5" />
+                            <TextBlock Text="{Binding PurchaseDate}" Grid.Column="2" Margin="5" />
+                            <TextBlock Text="{Binding Color}" Grid.Column="3" Margin="5" />
+                            <TextBlock Text="{Binding Size}" Grid.Column="4" Margin="5" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -79,7 +82,9 @@
                 <TextBox Width="150" Height="30" VerticalAlignment="Top" Name="searchInput"
                          Margin="16 25 0 0" FontSize="17" FontWeight="Bold" Padding="3"
                          TextAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"
-                         IsEnabled="False"/>
+                         IsEnabled="False" 
+                         TextChanged="searchInput_TextChanged"
+                         GotKeyboardFocus="searchInput_GotKeyboardFocus"/>
 
                 <!-- Sort section -->
                 <TextBlock Text="Sort Garments by" HorizontalAlignment="Left"
@@ -92,7 +97,9 @@
                           Width="150" 
                           Height="30" 
                           Margin="16 95 0 0"
-                          IsEnabled="False">
+                          IsEnabled="False"
+                          SelectionChanged="sortInput_SelectionChanged"
+                          GotKeyboardFocus="sortInput_GotKeyboardFocus">
                     <ComboBoxItem>Garment ID</ComboBoxItem>
                     <ComboBoxItem>Brand Name</ComboBoxItem>
                     <ComboBoxItem>Purchase Date</ComboBoxItem>
@@ -103,13 +110,13 @@
                 <!-- Add & Update && Delete buttons -->
                 <Button Content="ADD" HorizontalAlignment="Left"
                         Width="70" Height="30" Margin="16 130 0 0"
-                        IsEnabled="False" Name="addBtn"/>
+                        IsEnabled="False" Name="addBtn" Click="addBtn_Click"/>
                 <Button Content="UPDATE" HorizontalAlignment="Right"
                         Width="70" Height="30" Margin="16 130 0 0"
-                        IsEnabled="False"/>
+                        IsEnabled="False" Name="updateBtn" Click="updateBtn_Click"/>
                 <Button Content="DELETE" HorizontalAlignment="Center"
                         Width="155" Height="30" Margin="16 210 0 0"
-                        IsEnabled="False"/>
+                        IsEnabled="False" Name="deleteBtn" Click="deleteBtn_Click"/>
             </Grid>
         </Grid>
     </Grid>
