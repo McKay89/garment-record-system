@@ -142,9 +142,28 @@ namespace GarmentRecordSystemWPF.Service
             return _garments;
         }
 
-        public bool UpdateGarment(Garment? newGarment)
+        public bool UpdateGarment(Garment newGarment)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var existingGarment = _garments.FirstOrDefault(g => g.GarmentId == newGarment.GarmentId);
+
+                if (existingGarment != null)
+                {
+                    int index = _garments.IndexOf(existingGarment);
+                    _garments[index] = newGarment;
+                    Changes.IncrementUpdateCounter();
+                    return true;
+                }
+
+                return false;
+
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+                return false;
+            }
         }
 
         private static List<Garment> CreateGarmentList(List<GarmentJson> garments)
