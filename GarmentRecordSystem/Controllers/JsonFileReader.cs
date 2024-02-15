@@ -5,7 +5,9 @@ namespace GarmentRecordSystem.Controllers;
 
 public static class JsonFileReader
 {
-    public static List<GarmentJson>? Read(string filePath)
+    private static readonly string filePath = "./garments.json";
+    
+    public static List<GarmentJson>? Read()
     {
         try
         {
@@ -18,7 +20,9 @@ public static class JsonFileReader
         catch (FileNotFoundException)
         {
             Console.WriteLine($"File not found: {filePath}");
-            return null;
+            File.WriteAllText(filePath, "");
+
+            return new List<GarmentJson>();
         }
         catch (JsonException)
         {

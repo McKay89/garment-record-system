@@ -6,6 +6,8 @@ namespace GarmentRecordSystem.Controllers;
 
 public static class JsonFileWriter
 {
+    private static readonly string filePath = "./garments.json";
+    
     public static bool Write(IEnumerable<Garment>? garments)
     {
         try
@@ -15,7 +17,7 @@ public static class JsonFileWriter
                 WriteIndented = true,
                 Converters = { new JsonStringEnumConverter() }
             });
-            File.WriteAllText("../../../garments.json", json);
+            File.WriteAllText(filePath, json);
 
             return true;
         }
