@@ -13,6 +13,8 @@ namespace GarmentRecordSystemWPF.Service
         IEnumerable<Garment>? GetAll();
         List<Garment> SearchGarment(int id);
 
+        int GetGarmentCount();
+
         List<Garment> SortByGarmentId();
         List<Garment> SortByBrandName();
         List<Garment> SortByPurchaseDate();
