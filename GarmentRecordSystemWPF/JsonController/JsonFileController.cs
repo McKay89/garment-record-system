@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace GarmentRecordSystemWPF.JsonController
 {
@@ -39,16 +40,13 @@ namespace GarmentRecordSystemWPF.JsonController
             return deserializedText;
         }
 
-        public static void Write()
+        public static bool Write(IEnumerable<GarmentJson> garments)
         {
-            /*
             try
             {
-
                 var json = JsonSerializer.Serialize(garments, new JsonSerializerOptions
                 {
-                    WriteIndented = true,
-                    Converters = { new JsonStringEnumConverter() }
+                    WriteIndented = true
                 });
                 File.WriteAllText(_filePath, json);
 
@@ -56,10 +54,9 @@ namespace GarmentRecordSystemWPF.JsonController
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Trace.WriteLine(e);
                 return false;
             }
-            */
         }
     }
 }
