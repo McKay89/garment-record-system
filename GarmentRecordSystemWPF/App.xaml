@@ -9,6 +9,13 @@
             <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="#FF404040" />
             <SolidColorBrush x:Key="ButtonForegroundBrush" Color="White" />
             <SolidColorBrush x:Key="ButtonHoverBrush" Color="#FF151627" />
+            <SolidColorBrush x:Key="AddButtonBackgroundBrush" Color="#106828" />
+            <SolidColorBrush x:Key="AddButtonHoverBrush" Color="#FF022F0E" />
+            <SolidColorBrush x:Key="UpdateButtonBackgroundBrush" Color="#289208" />
+            <SolidColorBrush x:Key="UpdateButtonHoverBrush" Color="#FF113E03" />
+            <SolidColorBrush x:Key="DeleteButtonBackgroundBrush" Color="#920808" />
+            <SolidColorBrush x:Key="DeleteButtonHoverBrush" Color="#FF500505" />
+            <SolidColorBrush x:Key="ButtonDisabledBrush" Color="#FF757575" />
 
             <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
@@ -26,6 +33,87 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonHoverBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="AddButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource AddButtonBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource AddButtonHoverBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="UpdateButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource UpdateButtonBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource UpdateButtonHoverBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="DeleteButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource DeleteButtonBackgroundBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource DeleteButtonHoverBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonDisabledBrush}" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
