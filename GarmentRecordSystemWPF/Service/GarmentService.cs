@@ -74,6 +74,11 @@ namespace GarmentRecordSystemWPF.Service
             return _garments;
         }
 
+        public int GetGarmentCount()
+        {
+            return _garments.Count;
+        }
+
         public List<Garment> SearchGarment(int id)
         {
             var foundGarment = new List<Garment>();
